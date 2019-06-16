@@ -35,3 +35,24 @@ def create_table():
         print('Tabela SCRAPING criada com sucesso.')
     except Exception as e:
         print(e)
+
+def insert_scrap():
+    try:
+        conn = sqlite3.connect('scraping.db')
+
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        CREATE TABLE SCRAPING (
+                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                manchete TEXT NOT NULL,
+                url TEXT NOT NULL,
+                datahora DATETIME NOT NULL
+        );
+        """)
+
+        conn.close()
+
+        print('Tabela SCRAPING criada com sucesso.')
+    except Exception as e:
+        print(e)
