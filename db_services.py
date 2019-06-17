@@ -20,7 +20,7 @@ def create_table(conn):
                 id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                 manchete TEXT NOT NULL,
                 url TEXT NOT NULL,
-                datahora DATETIME NOT NULL
+                datahora TEXT NOT NULL
         );
         """)
 
@@ -32,8 +32,17 @@ def insert_manchete(conn, manchete, url, data):
     try:
         cursor = conn.cursor()
 
-        cursor.execute('INSERT INTO SCRAPING VALUES('{}', '{}' ,'{}');'.format(manchete, url, data))
+        cursor.execute(""" 
+        INSERT INTO 'scraping'
+        ('manchete', 'url', 'datahora') 
+        VALUES ('{}', '{}', '{}')
+        """.format(manchete, url, data))
+        
+        conn.commit()
 
-        print('Tabela SCRAPING criada com sucesso.')
+        #cursor.execute('INSERT INTO SCRAPING VALUES({}, {} ,{});'.format(manchete, url, data))
+
+        print('Registro inserido na tabela SCRAPING com sucesso.')
     except Exception as e:
         print(e)
+

@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import sqlite3
-from db_services import create_table, drop_table
+from db_services import create_table, drop_table, insert_manchete
 
 page = requests.get('https://g1.globo.com')
 
@@ -17,4 +17,6 @@ for s in search:
 
 connection = sqlite3.connect('scraping.db')
 
-create_table(conn=connection)
+#create_table(conn=connection)
+
+insert_manchete(conn=connection, manchete='teste', url='teste', data='teste')
