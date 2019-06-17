@@ -32,11 +32,9 @@ def insert_manchete(conn, manchete, url, data):
     try:
         cursor = conn.cursor()
 
-        cursor.execute(""" 
-        INSERT INTO 'scraping'
-        ('manchete', 'url', 'datahora') 
-        VALUES ('{}', '{}', '{}')
-        """.format(manchete, url, data))
+        lista = [manchete, url, data]
+
+        cursor.execute('insert into scraping(manchete, url, datahora) values (?, ?, ?)', lista);
         
         conn.commit()
 
