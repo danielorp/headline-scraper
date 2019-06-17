@@ -20,13 +20,8 @@ dt_hr_sp_texto = data_e_hora_sao_paulo.strftime('%d/%m/%Y %H:%M')
 
 connection = sqlite3.connect('scraping.db')
 
-import pdb
-pdb.set_trace()
-
 for s in search:
     manchete = s.contents[0]
-    #manchete = manchete.replace(""" " """, """ ´ """)
-    print(manchete)
     url = s['href']
     data = dt_hr_sp_texto
-    insert_manchete(conn=connection, manchete=manchete, url=url, data=data)    
+    insert_manchete(conn=connection, manchete=manchete, url=url, data=data)
