@@ -15,5 +15,6 @@ for s in search:
     print(s.contents)
     print(s['href'])
 
-create_table()
+connection = sqlite3.connect('scraping.db')
 
+create_table(conn=connection)
