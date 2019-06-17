@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import sqlite3
 from db_services import create_table, drop_table, insert_manchete
+from datetime import datetime
+from pytz import timezone
 
 page = requests.get('https://g1.globo.com')
 
@@ -11,12 +13,15 @@ soup = BeautifulSoup(page.content, 'html.parser')
 
 search = soup.find_all('a', class_="feed-post-link")
 
-for s in search:
-    print(s.contents)
-    print(s['href'])
+data_e_hora_atuais = datetime.now()
+fuso_horario = timezone('America/Sao_Paulo')
+data_e_hora_sao_paulo = data_e_hora_atuais.astimezone(fuso_horario)
+dt_hr_sp_texto = data_e_hora_sao_paulo.strftime('%d/%m/%Y %H:%M')
 
 connection = sqlite3.connect('scraping.db')
 
-#create_table(conn=connection)
-
-insert_manchete(conn=connection, manchete='teste', url='teste', data='teste')
+for s in search:
+    manchete = s.contents
+    url = s['href']
+    data = dt_hr_sp_texto
+    insert_manchete(conn=connection, manchete=manchete, url=url, data=data)    
