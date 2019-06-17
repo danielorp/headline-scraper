@@ -28,3 +28,12 @@ def create_table(conn):
     except Exception as e:
         print(e)
         
+def insert_manchete(conn, manchete, url, data):
+    try:
+        cursor = conn.cursor()
+
+        cursor.execute('INSERT INTO SCRAPING VALUES('{}', '{}' ,'{}');'.format(manchete, url, data))
+
+        print('Tabela SCRAPING criada com sucesso.')
+    except Exception as e:
+        print(e)
