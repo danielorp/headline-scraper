@@ -1,37 +1,11 @@
 import sqlite3
+import peewee
+from models import Scraping
 
 
-def drop_table(conn):
-    try:
-        cursor = conn.cursor()
-        cursor.execute("DROP TABLE SCRAPING")
-        print('Tabela SCRAPING excluida com sucesso.')
-    except Exception as e:
-        print(e)
-
-def create_table(conn):
-    try:
-        cursor = conn.cursor()
-        cursor.execute("""
-        CREATE TABLE SCRAPING (
-                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                manchete TEXT NOT NULL,
-                url TEXT NOT NULL,
-                datahora TEXT NOT NULL
-        );
-        """)
-
-        print('Tabela SCRAPING criada com sucesso.')
-    except Exception as e:
-        print(e)
-        
-def insert_manchete(conn, manchete, url, data):
-    try:
-        cursor = conn.cursor()
-        lista = [manchete, url, data]
-        cursor.execute('insert into scraping (manchete, url, datahora) values (?, ?, ?)', lista);
-        conn.commit()
-        print('Registro inserido na tabela SCRAPING com sucesso.')
-    except Exception as e:
-        print(e)
+def create_table():
+        try:
+                Scraping.create_table()
+        except peewee.OperationalError:
+                print('Tabela Author ja existe!')
 
