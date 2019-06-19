@@ -12,6 +12,7 @@ page = requests.get('https://g1.globo.com')
 
 soup = BeautifulSoup(page.content, 'html.parser')
 
+# Permite busca com múltiplas classes na tag
 # tag = soup.find_all('a', {'class': 'feed-post-link', 'class': 'gui-color-primary', 'class': 'gui-color-hover'})
 
 search = soup.find_all('a', class_="feed-post-link")
@@ -21,10 +22,10 @@ fuso_horario = timezone('America/Sao_Paulo')
 data_e_hora_sao_paulo = data_e_hora_atuais.astimezone(fuso_horario)
 dt_hr_sp_texto = data_e_hora_sao_paulo.strftime('%d/%m/%Y %H:%M')
 
-print(page.content)
-
-#for s in search:
-#    manchete = s.contents[0]
-#    url = s['href']
-#    data = dt_hr_sp_texto
-#    insert = Scraping.create(manchete=manchete, url=url, datahora=data)
+for s in search:
+    manchete = s.contents[0]
+    url = s['href']
+    data = dt_hr_sp_texto
+    query = Scraping.select().where(Scraping.manchete == manchete)
+    if not query:
+        insert = Scraping.create(manchete=manchete, url=url, datahora=data)
