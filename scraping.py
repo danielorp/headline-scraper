@@ -1,12 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import sqlite3
-#from db_services import create_table, drop_table, insert_manchete
 from datetime import datetime
 from pytz import timezone
 import peewee
-
 from models import Scraping
+from db_services import compara_manchetes
+
+# Certifica-se da existência da tabela.
+Scraping.create_table()
 
 page = requests.get('https://g1.globo.com')
 
@@ -26,6 +28,7 @@ for s in search:
     manchete = s.contents[0]
     url = s['href']
     data = dt_hr_sp_texto
-    query = Scraping.select().where(Scraping.manchete == manchete)
-    if not query:
+    localizado = compara_manchetes(manchete)
+    if not localizado:
         insert = Scraping.create(manchete=manchete, url=url, datahora=data)
+        print('Nova adição!')
