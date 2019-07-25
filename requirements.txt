@@ -1,0 +1,4 @@
+requests==2.22.0
+beautifulsoup4==4.8.0
+peewee==3.9.6
+pytz==2019.1
